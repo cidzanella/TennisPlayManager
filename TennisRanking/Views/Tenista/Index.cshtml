@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Tenista>
+
+@{
+    ViewData["Title"] = "Tenistas";
+}
+
+<h4 class="text-center text-uppercase">Lista de Tenistas</h4>
+
+<p>
+    <a asp-action="Create" class="btn btn-sm btn-primary rounded-0 text-uppercase"><i class="fas fa-plus-circle"></i> Adicionar Novo</a>
+</p>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Tenista</th>
+            <th>Altura (cm)</th>
+            <th>Backhand</th>
+            <th>Empunhadura</th>
+            <th>Idade</th>
+            <th>Ranking</th>
+            <th>Editar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Tenista tenista in Model)
+        {
+        <tr>
+            <td>
+                @*Caso a imagem data do objeto não exista irá apresentar a imagem do objeto img*@
+                <object data="~/pictures/@tenista.Foto" type="image/png" class="rounded-circle" height="40" width="40" asp-append-version="true" >
+                    <img src="~/img/Default_PlayerImage.png" alt="" class="rounded-circle" height="40" width="40" asp-append-version="true" />
+                </object>
+                @tenista.Sobrenome, @tenista.Nome
+            </td>
+            <td>@tenista.AlturaCm cm</td>
+            <td>@((Backhand)tenista.Backhand) </td>
+            <td>@((Empunhadura)tenista.Empunhadura)</td>
+            <td>@tenista.Idade()</td>
+            <td>@((Sexo)tenista.Sexo)</td>
+
+            <td>
+                @Html.ActionLink("...", "Update", "Tenista", new { id = tenista.Id }, null)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

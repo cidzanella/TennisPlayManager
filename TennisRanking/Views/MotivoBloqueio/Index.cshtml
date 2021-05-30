@@ -1,0 +1,12 @@
+﻿@model List<MotivoBloqueio>
+
+@{
+    ViewData["Title"] = "Motivo Bloqueio";
+}
+
+<ul>
+    @foreach (MotivoBloqueio motivo in Model)
+    {
+        <li>@motivo.Motivo</li>
+    }
+</ul>

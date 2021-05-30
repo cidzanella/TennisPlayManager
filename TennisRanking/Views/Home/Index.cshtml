@@ -1,0 +1,59 @@
+﻿@model TennisRanking.ViewModels.HomeVM
+@{
+    ViewData["Title"] = "GTM";
+}
+
+<div class="img-fluid text-center ">
+    <img src="/img/GTM.png" alt="GTM" width="100" height="100" />
+</div>
+<div class="text-center">
+    <h5>Bem vindo ao Portal GTM Tennis!</h5>
+</div>
+
+@***************************************************************************
+        <div class="text-center">
+            <h5>Bem vindo ao Portal GTM Tennis!!</h5>
+            <br />
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <p>
+                    Se ainda não é cadastrado, crie o seu perfil online para participar do Ranking GTM e desafiar seus amigos! <br />
+                    <a asp-area="Identity" asp-page="/Account/Register">Registre-se</a> e prepare-se para defender e conquistar novas posições!
+                </p>
+            }
+        </div>
+        <div class="row row-cols-2 text-center justify-content-xl-center">
+            <div class="col">
+                <a class="nav-link text-dark" asp-area="" asp-controller="RankingTenistas" asp-action="Ranking" asp-route-sexo=@Sexo.Feminino>
+                    <img src="~/img/Silhouette_f.png" width="50" height="100" />
+                </a>
+            </div>
+            <div class="col">
+                <a class="nav-link text-dark" asp-area="" asp-controller="RankingTenistas" asp-action="Ranking" asp-route-sexo=@Sexo.Masculino>
+                    <img src="~/img/Silhouette_m.png" width="50" height="100" />
+                </a>
+            </div>
+            <div class="col">
+                Ranking Feminino
+            </div>
+            <div class="col">
+                Ranking Masculino
+            </div>
+        </div>
+    **************************************************@
+<br />
+<div class="img-fluid text-center">
+    @foreach (string sourceFile in Model.SponsorsLogo)
+    {
+        <img src="@Url.Content(sourceFile)" width="150" height="100" />
+    }
+
+</div>
+<br />
+@Html.Partial("_AgendaDesafios", @Model.DesafiosVM)
+<br />
+@Html.Partial("_AgendaAmistosos", @Model.AmistososVM)
+<br />
+<h3>ÚLTIMOS RESULTADOS DO RANKING</h3>
+@Html.Partial("_HistoricoPartial", @Model.JogosVM)
+

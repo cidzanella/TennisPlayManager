@@ -1,0 +1,175 @@
+﻿@model TennisRanking.ViewModels.ResultadoVM
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="col-md-10 mx-auto py-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h3>Informar Resultado</h3>
+            <h5>
+                @Model.TenistaA.DisplayNome
+                <br />
+                vs
+                <br />
+                @Model.TenistaB.DisplayNome
+            </h5>            
+            <p>@Model.Jogo.Agenda.DisplayAgenda</p>
+        </div>
+        <div class="card-body">
+            <form enctype="multipart/form-data" asp-action="RegistrarResultado">
+                <div class="row col-12">
+                    <div class="card col-12" style="padding:unset">
+
+                        <div class="card-header text-center">
+                            <h4>1&deg; SET</h4>
+                        </div>
+
+                        <div class="card-body text-center">
+                            <table class="table table-borderless table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>GAMES</th>
+                                        <th>TIE-BREAK</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>@Model.TenistaA.DisplayNome </td>
+                                        <td>
+                                            @Html.TextBoxFor(m => m.Placar.Set1GamesTenistaA, new { @class = "form-control lg", @type = "number" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(m => m.Placar.Set1TieBreakTenistaA, new { @class = "form-control sm", @type = "number" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Model.TenistaB.DisplayNome</td>
+                                        <td>
+                                            @Html.TextBoxFor(m => m.Placar.Set1GamesTenistaB, new { @class = "form-control lg", @type = "number" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(m => m.Placar.Set1TieBreakTenistaB, new { @class = "form-control sm", @type = "number" })
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card col-12" style="padding:unset">
+
+                        <div class="card-header text-center">
+                            <h4>2&deg; SET</h4>
+                        </div>
+
+                        <div class="card-body text-center">
+                            <table class="table table-borderless table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>GAMES</th>
+                                        <th>TIE-BREAK</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>@Model.TenistaA.DisplayNome</td>
+                                        <td>
+                                            @Html.TextBoxFor(m => m.Placar.Set2GamesTenistaA, new { @class = "form-control lg", @type = "number" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(m => m.Placar.Set2TieBreakTenistaA, new { @class = "form-control sm", @type = "number" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Model.TenistaB.DisplayNome</td>
+                                        <td>
+                                            @Html.TextBoxFor(m => m.Placar.Set2GamesTenistaB, new { @class = "form-control lg", @type = "number" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(m => m.Placar.Set2TieBreakTenistaB, new { @class = "form-control sm", @type = "number" })
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card col-12" style="padding:unset">
+
+                        <div class="card-header text-center">
+                            <h4>3&deg; SET</h4>
+                        </div>
+
+                        <div class="card-body text-center">
+                            <table class="table table-borderless table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>SUPER TIE-BREAK</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>@Model.TenistaA.DisplayNome</td>
+                                        <td>
+                                            @Html.TextBoxFor(m => m.Placar.Set3TieBreakTenistaA, new { @class = "form-control sm", @type = "number" })
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Model.TenistaB.DisplayNome</td>
+                                        <td>
+                                            @Html.TextBoxFor(m => m.Placar.Set3TieBreakTenistaB, new { @class = "form-control sm", @type = "number" })
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Jogo.TenistaDesistenteId)
+                        @Html.DropDownListFor(m => m.Jogo.TenistaDesistenteId, new SelectList(@Model.Tenistas, "Id", "DisplayNome"), "", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Jogo.TenistaDesistenteId)
+                        <small>Informe caso um dos tenistas precisou abandonar o jogo.</small>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Jogo.TenistaAusenteWOId)
+                        @Html.DropDownListFor(m => m.Jogo.TenistaAusenteWOId, new SelectList(@Model.Tenistas, "Id", "DisplayNome"), "", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Jogo.TenistaAusenteWOId)
+                        <small>Informe caso um dos tenistas não tenha comparecido.</small>
+                    </div>
+                </div>
+                <br />
+                <br />
+                @Html.HiddenFor(m => m.Jogo.Id)
+                @Html.HiddenFor(m => m.Jogo.TenistaAId)
+                @Html.HiddenFor(m => m.Jogo.TenistaBId)
+                <div class="form-group">
+                    <input type="submit" value="Registrar" class="btn btn-primary rounded-0 " />
+                    <a asp-area="" asp-controller="Tenista" asp-action="MeuPerfil" class="btn btn-primary rounded-0 "><i class="fas fa-fast-backward"></i>Voltar</a>
+                </div>
+            </form>
+            <br/>
+            <p>Informe o placar de cada set, indicando quantos games cada tenista ganhou. Caso tenham jogado o tiebreak do set informar além dos games vencidos o placar de pontos do tiebreak.</p>
+            <p>Para o 3&deg; set é informado apenas o placar de pontos do super tie-break. </p>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });</script>
+}

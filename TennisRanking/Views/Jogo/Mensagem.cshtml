@@ -1,0 +1,8 @@
+﻿@{
+    ViewData["Title"] = "Mensagem!";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Raw(TempData["Mensagem"])
+<br />
+<a asp-controller="Home" asp-action="Index" class="btn btn-sm btn-primary rounded-0 text-uppercase"><i class="fas fa-plus-circle"></i>Início</a>

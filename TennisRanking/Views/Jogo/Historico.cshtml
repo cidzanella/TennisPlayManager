@@ -1,0 +1,11 @@
+﻿@model List<TennisRanking.ViewModels.JogoVM>
+
+@{
+    ViewData["Title"] = "Histórico";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>@Html.Raw(ViewData["Title"])</h2>
+<br />
+@Html.Partial("_HistoricoPartial", @Model)
+
+

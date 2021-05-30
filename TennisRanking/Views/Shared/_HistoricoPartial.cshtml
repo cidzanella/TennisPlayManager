@@ -1,0 +1,132 @@
+﻿@model List<TennisRanking.ViewModels.JogoVM>
+
+<style>
+    .tableZebraDupla tr:nth-child(4n+1), .tableZebraDupla tr:nth-child(4n+2) {
+        background: #e8e4e4;
+    }
+</style>
+
+@*Lista de jogos *@
+<div class="card-header text-center">
+    <h4>@Html.Raw(ViewData["Tipo"])</h4>
+    <table class="table table-borderless tableZebraDupla">
+        <tbody>
+            @foreach (var jogoVMJogado in Model)
+            {
+                <tr>
+                    @*Data do jogo*@
+                    <td>@jogoVMJogado.Jogo.Agenda.Data.ToShortDateString()</td>
+
+                    @*Testa se o TENISTA A é o vencedor para destacar com bold*@
+                    @if (jogoVMJogado.Jogo.TenistaVencedorId == jogoVMJogado.TenistaA.Id)
+                    {
+                        <td><b>&raquo; @jogoVMJogado.TenistaA.DisplayNome</b></td>
+                    }
+                    else
+                    {
+                        <td>@jogoVMJogado.TenistaA.DisplayNome</td>
+                    }
+                    @*Set 1*@
+                    @if (jogoVMJogado.Placar.Set1TieBreakTenistaA == 0 && jogoVMJogado.Placar.Set1TieBreakTenistaB == 0)@*se não teve tiebreak no set*@
+                    {
+                        <td>@jogoVMJogado.Placar.Set1GamesTenistaA</td>
+                    }
+                    else
+                    {
+                        <td>@jogoVMJogado.Placar.Set1GamesTenistaA<sup>@jogoVMJogado.Placar.Set1TieBreakTenistaA</sup></td>
+                    }
+                    @*Set 2*@
+                    @if (jogoVMJogado.Placar.Set2TieBreakTenistaA == 0 && jogoVMJogado.Placar.Set2TieBreakTenistaB == 0)@*se não teve tiebreak no set*@
+                    {
+                        <td>@jogoVMJogado.Placar.Set2GamesTenistaA</td>
+                    }
+                    else
+                    {
+                        <td>@jogoVMJogado.Placar.Set2GamesTenistaA<sup>@jogoVMJogado.Placar.Set2TieBreakTenistaA</sup></td>
+                    }
+                    @*Set 3*@
+                    @if (jogoVMJogado.Placar.Set3TieBreakTenistaA == 0 && jogoVMJogado.Placar.Set3TieBreakTenistaB == 0)@*se não teve super tiebreak *@
+                    {
+                        <td> </td>
+                        @*vazio para preencher grid*@
+                    }
+                    else
+                    {
+                        <td>@jogoVMJogado.Placar.Set3TieBreakTenistaA</td>
+                    }
+                    @*Desistente? W.O.?*@
+                    @if (jogoVMJogado.Jogo.TenistaDesistenteId == jogoVMJogado.Jogo.TenistaAId)@*se tenistaA desistiu*@
+                    {
+                        <td>Desistência</td>
+                    }
+                    else if (jogoVMJogado.Jogo.TenistaAusenteWOId == jogoVMJogado.Jogo.TenistaAId)@*se tenistaA faltou WO*@
+                    {
+                        <td>W.O.</td>
+                    }
+                    else
+                    {
+                        <td> </td>
+                        @*espaço branco para ajustar grid*@
+                    }
+                </tr>
+
+                <tr>
+                    @*Data do jogo - espaço em branco para não repetir*@
+                    <td>  </td>
+                    @*Testa se o TENISTA B é o vencedor para destacar com bold*@
+                    @if (jogoVMJogado.Jogo.TenistaVencedorId == jogoVMJogado.TenistaB.Id)
+                    {
+                        <td><b>&raquo; @jogoVMJogado.TenistaB.DisplayNome</b></td>
+                    }
+                    else
+                    {
+                        <td>@jogoVMJogado.TenistaB.DisplayNome</td>
+                    }
+                    @*Set 1*@
+                    @if (jogoVMJogado.Placar.Set1TieBreakTenistaB == 0 && jogoVMJogado.Placar.Set1TieBreakTenistaB == 0)@*se não teve tiebreak no set*@
+                    {
+                        <td>@jogoVMJogado.Placar.Set1GamesTenistaB</td>
+                    }
+                    else
+                    {
+                        <td>@jogoVMJogado.Placar.Set1GamesTenistaB<sup>@jogoVMJogado.Placar.Set1TieBreakTenistaB</sup></td>
+                    }
+                    @*Set 2*@
+                    @if (jogoVMJogado.Placar.Set2TieBreakTenistaB == 0 && jogoVMJogado.Placar.Set2TieBreakTenistaB == 0)@*se não teve tiebreak no set*@
+                    {
+                        <td>@jogoVMJogado.Placar.Set2GamesTenistaB</td>
+                    }
+                    else
+                    {
+                        <td>@jogoVMJogado.Placar.Set2GamesTenistaB<sup>@jogoVMJogado.Placar.Set2TieBreakTenistaB</sup></td>
+                    }
+                    @*Set 3*@
+                    @if (jogoVMJogado.Placar.Set3TieBreakTenistaA == 0 && jogoVMJogado.Placar.Set3TieBreakTenistaB == 0)@*se não teve super tiebreak *@
+                    {
+                        <td> </td>
+                        @*vazio para preencher grid*@
+                    }
+                    else
+                    {
+                        <td>@jogoVMJogado.Placar.Set3TieBreakTenistaB</td>
+                    }
+                    @*Desistente? W.O.?*@
+                    @if (jogoVMJogado.Jogo.TenistaDesistenteId == jogoVMJogado.Jogo.TenistaBId)@*se tenistaB desistiu*@
+                    {
+                        <td>Desistência</td>
+                    }
+                    else if (jogoVMJogado.Jogo.TenistaAusenteWOId == jogoVMJogado.Jogo.TenistaBId)@*se tenistaB faltou WO*@
+                    {
+                        <td>W.O.</td>
+                    }
+                    else
+                    {
+                        <td> </td>
+                        @*espaço branco para ajustar grid*@
+                    }
+                </tr>
+
+            }
+        </tbody>
+    </table>
+</div>

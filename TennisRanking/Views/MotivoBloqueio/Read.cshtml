@@ -1,0 +1,13 @@
+﻿
+@model MotivoBloqueio
+
+@{
+    ViewData["Title"] = "Motivo Bloqueio";
+}
+
+<p>@Model.Motivo</p>
+
+@using (Html.BeginForm("Update", "MotivoBloqueio", Model.Id, FormMethod.Get))
+{
+    <button class="btn btn-primary">Editar</button>
+}

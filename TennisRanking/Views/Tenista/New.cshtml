@@ -1,0 +1,149 @@
+﻿@model TennisRanking.ViewModels.TenistaFormVM
+
+@{ ViewData["Title"] = "Novo"; }
+
+<div class="col-md-10 mx-auto py-4">
+    <div class="card">
+        <div class="card-header bg-primary text-uppercase text-white">
+            <h4>Adicionar Novo </h4>
+        </div>
+        <div class="card-body">
+            <form enctype="multipart/form-data" asp-action="New">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.Nome)
+                            @Html.TextBoxFor(m => m.Tenista.Nome, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.Nome)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.Sobrenome)
+                            @Html.TextBoxFor(m => m.Tenista.Sobrenome, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.Sobrenome)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.Nascimento)
+                            @Html.TextBoxFor(m => m.Tenista.Nascimento, "0:dd/mm/yyyy", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.Nascimento)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.AlturaCm)
+                            @Html.TextBoxFor(m => m.Tenista.AlturaCm, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.AlturaCm)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.Sexo)
+                            @Html.DropDownListFor(m => m.Tenista.Sexo, Html.GetEnumSelectList<Sexo>(), "", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.Sexo)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.Empunhadura)
+                            @Html.DropDownListFor(m => m.Tenista.Empunhadura, Html.GetEnumSelectList<Empunhadura>(), "", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.Empunhadura)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.Backhand)
+                            @Html.DropDownListFor(m => m.Tenista.Backhand, Html.GetEnumSelectList<Backhand>(), "", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.Backhand)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.Celular)
+                            @Html.TextBoxFor(m => m.Tenista.Celular, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.Celular)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.Email)
+                            @Html.TextBoxFor(m => m.Tenista.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.Email)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.CidadeId)
+                            @Html.DropDownListFor(m => m.Tenista.CidadeId, new SelectList(Model.Cidades, "Id", "Nome"), "", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.CidadeId)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.TipoTenista)
+                            @Html.DropDownListFor(m => m.Tenista.TipoTenista, Html.GetEnumSelectList<TipoTenista>(), "", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.TipoTenista)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.JogaRanking)
+                            @Html.CheckBoxFor(m => m.Tenista.JogaRanking, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.JogaRanking)
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ProfileImage" class="control-label"></label>
+                            <div class="custom-file">
+                                <input asp-for="ProfileImage" class="custom-file-input" id="customFile">
+                                <label class="custom-file-label" for="customFile">Selecione o arquivo</label>
+                            </div>
+                            <span asp-validation-for="ProfileImage" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                @* Campo oculto só para fazer o link com o ID do tenista no model para o update *@
+                @Html.HiddenFor(m => m.Tenista.Id)
+
+                <div class="form-group">
+                    <input type="submit" value="Registrar" class="btn btn-sm btn-primary rounded-0 " />
+                    <a asp-action="Index" class="btn btn-sm btn-primary rounded-0 "><i class="fas fa-fast-backward"></i> Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+    // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });</script>
+}
+

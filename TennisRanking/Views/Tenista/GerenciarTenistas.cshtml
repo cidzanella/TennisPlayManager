@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Tenista>
+
+@{ ViewData["Title"] = "Tenistas"; }
+
+<h4 class="text-center text-uppercase">Gerenciar Tenistas</h4>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Tenista</th>
+            <th>Joga Ranking</th>
+            <th>Situação</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Tenista tenista in Model)
+        {
+        <tr>
+            <td>@tenista.Nome @tenista.Sobrenome</td>
+            <td>@Html.Raw(tenista.JogaRanking ? "<span>&#10003;</span>" : "") </td>
+            <td>@Html.Raw(tenista.MotivoBloqueioId != 0 ? "<span style='color:red'>Bloqueado</span>" : "Liberado")</td>
+            <td>
+                @(tenista.MotivoBloqueioId != 0 ? @Html.ActionLink("Desbloquear", "Desbloquear", "Tenista", new { id = tenista.Id }, null) : @Html.ActionLink("Bloquear", "Bloquear", "Tenista", new { id = tenista.Id }, null))
+                @(tenista.JogaRanking ? @Html.ActionLink(" | Exluir do Ranking", "ExluirTenistaDoRanking", "Tenista", new { id = tenista.Id }, null) : @Html.Raw(""))
+            </td>
+        </tr>}
+    </tbody>
+</table>

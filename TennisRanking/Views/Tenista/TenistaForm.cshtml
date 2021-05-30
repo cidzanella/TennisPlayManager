@@ -1,0 +1,172 @@
+﻿@model TennisRanking.ViewModels.TenistaFormVM
+
+@{
+    ViewData["Title"] = "Tenista";
+}
+
+<div class="col-md-10 mx-auto py-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            @*Caso a imagem data do objeto não exista irá apresentar a imagem do objeto img*@
+            <object data="~/pictures/@Model.Tenista.Foto" type="image/png" class="rounded-circle" height="150" width="150" asp-append-version="true">
+                <img src="~/img/Default_PlayerImage.png" alt="" class="rounded-circle" height="150" width="150" asp-append-version="true" />
+            </object>
+            <br />
+            <br />
+            @if (Model.Tenista.Id != 0)
+            {
+                <h4>@Model.Tenista.Sobrenome, @Model.Tenista.Nome</h4>
+            }
+            else
+            {
+                <h4>Novo Tenista</h4>
+                <p>Faça seu cadastrado informando os campos abaixo com seus dados e selecione uma foto para seu perfil.</p>
+            }
+        </div>
+        <div class="card-body">
+            <form enctype="multipart/form-data" asp-action="Save">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.Nome)
+                            @Html.TextBoxFor(m => m.Tenista.Nome, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.Nome)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.Sobrenome)
+                            @Html.TextBoxFor(m => m.Tenista.Sobrenome, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.Sobrenome)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.Apelido)
+                            @Html.TextBoxFor(m => m.Tenista.Apelido, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.Apelido)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.Sexo)
+                            @Html.DropDownListFor(m => m.Tenista.Sexo, Html.GetEnumSelectList<Sexo>(), "", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.Sexo)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.AlturaCm)
+                            @Html.TextBoxFor(m => m.Tenista.AlturaCm, new { @class = "form-control", @type = "number" })
+                            @Html.ValidationMessageFor(m => m.Tenista.AlturaCm)
+                            <small>Informe a altura em centímetros, sem vírgula ou ponto - Ex: para 1.80m informe apenas o número 180</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.Nascimento)
+                            @Html.TextBoxFor(m => m.Tenista.Nascimento, "{0:dd/MM/yyyy}", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.Nascimento)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.Empunhadura)
+                            @Html.DropDownListFor(m => m.Tenista.Empunhadura, Html.GetEnumSelectList<Empunhadura>(), "", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.Empunhadura)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.Backhand)
+                            @Html.DropDownListFor(m => m.Tenista.Backhand, Html.GetEnumSelectList<Backhand>(), "", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.Backhand)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.Email)
+                            </br>
+                            @Html.TextBoxFor(m => m.Tenista.Email, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(m => m.Tenista.Email)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.Celular)
+                            @Html.TextBoxFor(m => m.Tenista.Celular, new { @class = "form-control", @type = "number" })
+                            @Html.ValidationMessageFor(m => m.Tenista.Celular)
+                            <small>Informe o número do celular com dois dígitos do DDD e nove digitos do telefone - Ex: 45988776655"</small>
+                        </div>
+                    </div>
+                </div>
+@*                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.TipoTenista)
+                            @Html.DropDownListFor(m => m.Tenista.TipoTenista, Html.GetEnumSelectList<TipoTenista>(), "", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.TipoTenista)
+                        </div>
+*@
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tenista.CidadeId)
+                            @Html.DropDownListFor(m => m.Tenista.CidadeId, new SelectList(Model.Cidades, "Id", "Nome"), "", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Tenista.CidadeId)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ProfileImage" class="control-label"></label>
+                            <div class="custom-file">
+                                <input asp-for="ProfileImage" class="custom-file-input" id="customFile">
+                                <label class="custom-file-label" for="customFile">@(String.IsNullOrWhiteSpace(Model.Tenista.Foto)?"Selecione um arquivo":Model.Tenista.Foto)</label>
+                            </div>
+                            <span asp-validation-for="ProfileImage" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="checkbox">
+                            <label>@Html.CheckBoxFor(m => m.Tenista.JogaRanking) Quero jogar o ranking!</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                    </div>
+                </div>
+
+                @* Campo oculto só para fazer o link com o ID do tenista no model para o update *@
+                @Html.HiddenFor(m => m.Tenista.Id)
+                </br>
+            <div class="form-group">
+                <input type="submit" value="Registrar" class="btn btn-primary rounded-0 " />
+                <a asp-area="" asp-controller="Tenista" asp-action="MeuPerfil" class="btn btn-primary rounded-0 "><i class="fas fa-fast-backward"></i>Voltar</a>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });</script>
+}
+

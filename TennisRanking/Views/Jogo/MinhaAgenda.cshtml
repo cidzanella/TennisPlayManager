@@ -1,0 +1,149 @@
+﻿@model List<TennisRanking.ViewModels.JogoVM>
+
+@{
+    ViewData["Title"] = "Minha Agenda";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>@Html.Raw(ViewData["Title"])</h2>
+<br />
+@*Verifica se tem algum desafio*@
+@if (Model.Where(j => j.Jogo.EhDesafio).Count() == 0)
+{
+    <div class="card col-12" style="padding:unset">
+        <div class="card-header text-white" style="background:#C6682E">
+            <h3>Desafio</h3>
+        </div>
+        <div class="card-body">
+            <p>Para desafiar acesse o ranking e selecione um tenista.</p>
+        </div>
+    </div>
+    <br />
+    <br />
+}
+@*Verifica se tem algum amistoso*@
+@if (Model.Where(j => j.Jogo.EhDesafio == false && (j.Agenda.Data.Date > DateTime.Now.Date || (j.Agenda.Data.Date == DateTime.Now.Date && j.Agenda.HoraInicial.TimeOfDay >= DateTime.Now.TimeOfDay))).Count() == 0)
+{
+    <div class="card col-12" style="padding:unset">
+        <div class="card-header text-white" style="background:#004827">
+            <h3>Amistoso</h3>
+        </div>
+        <div class="card-body">
+            <p>Para agendar um jogo treino, clique no botão abaixo:</p>
+            <a class="btn btn-sm btn-primary" asp-controller="Jogo" asp-action="AgendarAmistoso">Agendar Amistoso</a>
+        </div>
+    </div>
+    <br />
+    <br />
+}
+@*Lista de desafios agendados*@
+@foreach (var jogoAgendado in Model.Where(j => j.Jogo.EhDesafio))
+{
+    <div class="card col-12" style="padding:unset">
+        <div class="card-header text-white" style="background:#C6682E">
+            <h3>Desafio</h3>
+        </div>
+        <div class="card-body">
+            <h5>
+                @jogoAgendado.TenistaA.DisplayNome
+                <br />
+                vs
+                <br />
+                @jogoAgendado.TenistaB.DisplayNome
+            </h5>
+
+            <p>@jogoAgendado.Agenda.DisplayAgenda</p>
+
+            @*Testa se foi confirmada a reserva ou se ainda está em pré-reserva*@
+            @if (jogoAgendado.Agenda.EhPreReserva)
+            {
+                <p>Status da Agenda: <b>Pré-Reserva</b></p>
+                @*Testa se tenista logado é o defensor então apresentar opções responder a chamada de desafio caso ela ainda esteja em pré-reserva*@
+                @if (jogoAgendado.TenistaB.Email == User.Identity.Name)
+                {
+                    <p>Responda a este desafio selecionando uma das três opções abaixo:</p>
+                    <ul>
+                        <li><a asp-controller="Jogo" asp-action="ConfirmarDesafio" asp-route-code=@jogoAgendado.Jogo.TokenConfirmacao>Confirmar</a> o desafio e ir pro jogo! </li>
+                        <li><a asp-controller="Jogo" asp-action="RecusarDesafio" asp-route-code=@jogoAgendado.Jogo.TokenConfirmacao>Recusar</a> este convite - o desafio pode ser recusado uma única vez e uma nova agenda será indicada pelo desafiante. Em uma eventual segunda recusa o desafiante será declarado vencedor por W.O. </li>
+                        <li><a asp-controller="Jogo" asp-action="EntregarDesafio" asp-route-code=@jogoAgendado.Jogo.TokenConfirmacao>Entregar</a> minha posição no ranking - escolha esta opção se não for jogar este desafio, o desafiante será declarado vencedor por W.O.e você irá cair uma posição no ranking. </li>
+                    </ul>
+                    <p>
+                        ATENÇÃO: RESPONDA RAPIDAMENTE PARA GARANTIR ESTA AGENDA! <br />
+                        Esta é uma pré-reserva e enquanto não for confirmada existe a possibilidade de um outro desafio ocupar esta agenda caso seja confirmado primeiro. <br />
+                        Então não perca tempo. Confirme já e garanta este jogo!
+                    </p>
+                }
+                else @*se tenista logado é o desafiante/anfitrião ele pode cancelar o convite *@
+                {
+                    <p>O convite para este desafio ainda não foi respondido. Aguarde ...</p>
+                    <p>Caso queira, você pode <a asp-controller="Jogo" asp-action="Cancelar" asp-route-id=@jogoAgendado.Jogo.Id>cancelar este convite (clique aqui)</a> e a pré-reserva de jogo será cancelada sem penalidades.</p>
+                }
+            }
+            else
+            {
+                <p>Status da Agenda: Confirmada</p>
+                <a class="btn btn-sm btn-primary" asp-controller="Jogo" asp-action="InformarResultado" asp-route-id=@jogoAgendado.Jogo.Id>Informar Resultado</a>
+                <a class="btn btn-sm btn-primary" asp-controller="Jogo" asp-action="Cancelar" asp-route-id=@jogoAgendado.Jogo.Id>Cancelar</a>
+                @*se tenista logado é o desafiante, ele pode além de cancelar, reagendar e informar resultado *@
+                @if (jogoAgendado.TenistaA.Email == User.Identity.Name)
+                {
+                    <a class="btn btn-sm btn-primary" asp-controller="Jogo" asp-action="Reagendar" asp-route-id=@jogoAgendado.Jogo.Id>Reagendar</a>
+                }
+            }
+        </div>
+    </div>
+    <br />
+    <br />
+}
+
+@*Lista de amistosos futuros agendados*@
+@foreach (var jogoAgendado in Model.Where(j => j.Jogo.EhDesafio == false && (j.Agenda.Data.Date > DateTime.Now.Date || (j.Agenda.Data.Date == DateTime.Now.Date && j.Agenda.HoraInicial.TimeOfDay >= DateTime.Now.TimeOfDay) )))
+   {
+    <div class="card col-12" style="padding:unset">
+        <div class="card-header text-white" style="background:#004827">
+            <h3>Amistoso</h3>
+        </div>
+        <div class="card-body">
+            <h5>
+                @jogoAgendado.TenistaA.DisplayNome
+                <br />
+                vs
+                <br />
+                @jogoAgendado.TenistaB.DisplayNome
+            </h5>
+
+            <p>@jogoAgendado.Agenda.DisplayAgenda</p>
+
+            @*Testa se foi confirmada a reserva ou se ainda está em pré-reserva*@
+            @if (jogoAgendado.Agenda.EhPreReserva)
+            {
+                <p>Status da Agenda: <b>Pré-Reserva</b></p>
+                @*Testa se tenista logado é o convidado então apresentar opções responder ao convite de amistoso caso ela ainda esteja em pré-reserva*@
+                @if (jogoAgendado.TenistaB.Email == User.Identity.Name)
+                {
+                    <p>Responda a este convite selecionando uma das opções abaixo:</p>
+                    <ul>
+                        <li><a asp-controller="Jogo" asp-action="ConfirmarAmistoso" asp-route-code=@jogoAgendado.Jogo.TokenConfirmacao>Confirmar</a> esta agenda de jogo treino</li>
+                        <li><a asp-controller="Jogo" asp-action="RecusarAmistoso" asp-route-code=@jogoAgendado.Jogo.TokenConfirmacao>Recusar</a> este convite e aguardar uma nova agenda.</li>
+                    </ul>
+                    <p>
+                        ATENÇÃO: RESPONDA RAPIDAMENTE PARA GARANTIR ESTA AGENDA! <br />
+                        Esta é uma pré-reserva e enquanto não for confirmada existe a possibilidade de um outro jogo ocupar esta agenda caso seja confirmado primeiro. <br />
+                        Então não perca tempo. Confirme já e garanta este jogo!
+                    </p>
+                }
+                else @*se tenista logado é o desafiante/anfitrião ele pode cancelar o convite *@
+                {
+                    <p>O convite para este jogo ainda não foi respondido. Aguarde ...</p>
+                    <p>Caso queira, você pode <a asp-controller="Jogo" asp-action="Cancelar" asp-route-id=@jogoAgendado.Jogo.Id>cancelar este convite (clique aqui)</a> e a pré-reserva de jogo será cancelada sem penalidades.</p>
+                }
+            }
+            else
+            {
+                <p>Status da Agenda: Confirmada</p>
+                <a class="btn btn-sm btn-primary" asp-controller="Jogo" asp-action="Cancelar" asp-route-id=@jogoAgendado.Jogo.Id>Cancelar</a>
+            }
+        </div>
+    </div>
+    <br />
+    <br />
+}

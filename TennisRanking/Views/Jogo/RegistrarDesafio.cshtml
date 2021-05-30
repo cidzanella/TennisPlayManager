@@ -1,0 +1,44 @@
+﻿@model TennisRanking.ViewModels.DesafioVM
+@{
+    ViewData["Title"] = "Desafio Agendado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Desafio Agendado (Pré-Reserva)</h2>
+<div class="row col-12">
+    <div class="col-5" style="padding:unset">
+        <div class="text-uppercase text-center" style="padding:15px 5px">
+            @*Caso a imagem data do objeto não exista irá apresentar a imagem do objeto img*@
+            <object data="~/pictures/@Model.TenistaA.Foto" type="image/png" class="rounded-circle" height="80" width="80" asp-append-version="true">
+                <img src="~/img/Default_PlayerImage.png" alt="" class="rounded-circle" height="80" width="80" asp-append-version="true" />
+            </object>
+            @*<h1>#@Model.TenistaA.PosicaoRanking</h1>*@
+            <h4>
+                @Model.TenistaA.DisplayNome
+            </h4>
+        </div>
+    </div>
+    <div class="col-5" style="padding:unset">
+        <div class="text-uppercase text-center" style="padding:15px 5px">
+            @*Caso a imagem data do objeto não exista irá apresentar a imagem do objeto img*@
+            <object data="~/pictures/@Model.TenistaB.Foto" type="image/png" class="rounded-circle" height="80" width="80" asp-append-version="true">
+                <img src="~/img/Default_PlayerImage.png" alt="" class="rounded-circle" height="80" width="80" asp-append-version="true" />
+            </object>
+            @*<h1>#@Model.TenistaA.PosicaoRanking</h1>*@
+            <h4>
+                @Model.TenistaB.DisplayNome
+            </h4>
+        </div>
+    </div>
+</div>
+<br />
+<div class="text-center col-md-9">
+    <h3>Agenda: @Model.Agenda.DisplayAgenda</h3>
+</div>
+<br />
+<h4>ATENÇÃO: Esta agenda de jogo está em <b>pré-reserva</b> e será confirmada assim que o defensor da posição responder ao desafio.</h4>
+<p>
+    Um email foi enviado ao defensor solicitando confirmação para este jogo! <br />
+    Enquanto não for confirmado existe a possibilidade de um outro desafio ocupar esta agenda caso seja confirmado primeiro.  <br />
+    Informaremos assim que recebermos a resposta, acompanhe seu email para novidades ...
+</p>

@@ -1,0 +1,19 @@
+﻿@model List<TennisRanking.ViewModels.AmistosoVM>
+<h3>AGENDA DE AMISTOSOS</h3>
+<div class="row col-12">
+        @foreach (var dia in Model.OrderBy(j => j.Jogo.Agenda.Data).ThenBy(j => j.Jogo.Agenda.HoraInicial).ThenBy(j => j.Jogo.Agenda.QuadraId).Select(j => j.Jogo.Agenda.Data).Distinct())
+        {
+            <div class="card col-6" style="padding:unset">
+                <div class="card-header text-white text-center" style="background:#004827">
+                    <p>@dia.ToString("ddd dd/MMM/yy")</p>
+                </div>
+                @foreach (var desafioVMdoDia in Model.Where(j => j.Jogo.Agenda.Data == dia.Date).OrderBy(j => j.Jogo.Agenda.Data).ThenBy(j => j.Jogo.Agenda.HoraInicial).ThenBy(j => j.Jogo.Agenda.QuadraId))
+                {
+                    <div class="card-body text-center" style="background: #ffffff">
+                        <small>@desafioVMdoDia.Jogo.Agenda.HoraInicial.ToShortTimeString() - Quadra #@desafioVMdoDia.Jogo.Agenda.QuadraId<br />@desafioVMdoDia.TenistaA.DisplayNome<br /> vs<br />@desafioVMdoDia.TenistaB.DisplayNome</small><br />
+                        <small>@(desafioVMdoDia.Jogo.Agenda.EhPreReserva == true ? "Pré-reserva" : "Confirmada")</small>
+                    </div>
+                }
+            </div>
+        }
+</div>

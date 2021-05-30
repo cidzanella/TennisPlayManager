@@ -1,0 +1,53 @@
+﻿
+@model TennisRanking.ViewModels.TenistaPerfilVM
+@{
+    ViewData["Title"] = "Perfil";
+}
+
+<div class="row col-12">
+        <div class="card col-12" style="padding:unset">
+            <div class="card-header text-uppercase text-white text-center" style="background:#004827; padding:15px 5px">
+                @*Caso a imagem data do objeto não exista irá apresentar a imagem do objeto img*@
+                <object data="~/pictures/@Model.Tenista.Foto" type="image/png" class="rounded-circle" height="80" width="80" asp-append-version="true">
+                    <img src="~/img/Default_PlayerImage.png" alt="" class="rounded-circle" height="80" width="80" asp-append-version="true" />
+                </object>
+                <div class="card-body text-white" style="background: #004827">
+                    <h1>#@Model.PosicaoRanking</h1>
+                    <h4>
+                        @Model.Tenista.DisplayNome
+                    </h4>
+                    @if (Model.Tenista.Email == User.Identity.Name)
+                    {
+                        <a style="color:white" href="@Url.Action("Update", "Tenista", new { id = Model.Tenista.Id }, null)">
+                            <img src="~/img/edit_icon_white.png" alt="Editar" width="50" height="50" />
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-action="Desafiar" asp-controller="Jogo" asp-route-id=@Model.Tenista.Id>
+                            <img src="~/img/Desafiar_Icone_Square_a.png" alt="Desafiar" asp-append-version="true" />
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+</div>
+
+<div class="row col-12">
+    <div class="card col-12"  style="padding:unset">
+        <div class="card-body text-white text-center text-xl-center" style="background:#C6682E; padding:15px 5px">
+            <h5>@Model.Tenista.AlturaCm cm </h5>
+            <h5>@Model.Tenista.Idade() anos</h5>
+            <h5>@((Sexo)Model.Tenista.Sexo) </h5>
+            <h5>Empunhadura de @((Empunhadura)Model.Tenista.Empunhadura) </h5>
+            <h5>Backhand @((Backhand)Model.Tenista.Backhand) </h5>
+            <h5>@((Model.Tenista.JogaRanking)?"Joga o ranking":"Não joga o ranking") </h5>
+            <h5>@Model.NomeCidade</h5>
+            <br/>
+            <a asp-action="HistoricoDesafios" asp-controller="Jogo" asp-route-id=@Model.Tenista.Id style="color: white">
+                <img src="~/img/Historico.png" alt="Histórico" width="57" height="70" asp-append-version="true" />
+                <p>Histórico</p>
+            </a>
+        </div>
+    </div>
+</div>

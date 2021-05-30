@@ -1,0 +1,63 @@
+﻿@model TennisRanking.ViewModels.RankingVM
+@{
+    ViewData["Title"] = "Ranking";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4 class="text-center text-uppercase">Ranking @(Model.Sexo == Sexo.Masculino?"Masculino":"Feminino")</h4>
+
+<table class="table table-bordered text-center align-middle" style="width: 100%">
+    <colgroup>
+        <col span="1" style="width: 20%;">
+        <col span="1" style="width: 50%;">
+        <col span="1" style="width: 10%;">
+        <col span="1" style="width: 10%;">
+        <col span="1" style="width: 10%;">
+    </colgroup>
+    <thead>
+        <tr>
+            <th>Posição</th>
+            <th>Tenista</th>
+            <th>Desde</th>
+            <th>Posição Anterior</th>
+            <th>Posição Inicial</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (RankingTenistas tenistaNoRanking in Model.Ranking)
+        {
+            <tr>
+                @*<td><h2>#@tenistaNoRanking.Posicao</h2></td>*@
+                <td>
+                    <h2><b>#@tenistaNoRanking.Posicao</b></h2>
+                    @*
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="Desafiar" asp-controller="RankingTenistas" asp-route-id=@tenistaNoRanking.Id>
+                            <img src="~/img/TennisBall.jpg" alt="Desafiar" class="rounded-circle" height="15" width="15" asp-append-version="true" />
+                        </a>
+                    }
+                    *@
+                </td>
+                <td>
+                    @*Caso a imagem data do objeto não exista irá apresentar a imagem do objeto img*@
+                    <a style="text-decoration: none" href="@Url.Action("Perfil", "Tenista", new { id = tenistaNoRanking.TenistaId })">
+                        <object data="~/pictures/@tenistaNoRanking.Tenista.Foto"
+                                type="image/png"
+                                class="rounded-circle"
+                                height="80"
+                                width="80"
+                                asp-append-version="true">
+                            <img src="~/img/Default_PlayerImage.png" alt="" class="rounded-circle" height="80" width="80" asp-append-version="true" />
+                        </object>
+                        <br />
+                        @tenistaNoRanking.Tenista.DisplayNome
+                    </a>
+                </td>
+                <td>@String.Format("{0:dd/MM/yyyy}", tenistaNoRanking.DataPosicaoAtual)</td>
+                <td>@tenistaNoRanking.PosicaoAnterior</td>
+                <td>@tenistaNoRanking.PosicaoInicial</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,73 @@
+- cadastrar horários das quadras 2 e 3 de amistoso e ranking
+- verificar porque não está listando amistoso futuro 
+
+[agendamento de amistoso]
+-ok só pode ter um único amistoso agendado
+- após 13h, não importa se jogou no dia anterior, só importa se tem agenda de amistoso futura, ai teria que cancelar a agenda futura para poder agendar um amistoso para aquele dia
+- após 13h pode agendar amistoso para aquele dia, mesmo que tenha agenda de jogo de ranking para o outro dia
+- ao tentar agendar um amistoso para uma data futura, se um dos tenistas tiver um desafio agendado para o dia anterior ou posterior a agenda proposta para o amistoso, não irá permitir até que a agenda do desafio seja cancelada (terá que escolher se quer agendar o amistoso ou manter o desafio)
+
+[agendamento de desafio]
+- só pode ter um único desafio agendado
+- após 13h, não importa se jogou no dia anterior, só importa se tem agenda futura de amistoso, ai teria que cancelar o amistoso futuro para poder agendar o desafio para aquele dia
+- ao tentar desafiar um tenista para uma data futura, se um deles (desafiante ou defensor) tiver um amistoso agendado para o dia, dia anterior ou posterior a agenda proposta para o desafio, não irá permitir a chamada do desafio até que a agenda do amistoso seja cancelada (terá que escolher se quer chamar o desafio ou manter o amistoso)
+
+- sem penalidade por falta atraso ... não vai bloquear por agora
+
+- agendar amistoso:
+) se 13h então qualquer tenista pode reservar horário livre naquele dia (mas se tiver reserva futura, não autoriza, tem que cancelar a reserva antes), só verificar se não está bloqueado
+) apresentar horários do dia e mais dois dias para frente - ex: seg ter qua (
+) reserva tem que ser dia do jogo mais pelo menos 2d então seria diajogo+2
+se jogou no dia ou no dia anterior só pode reservar para amanhã e depois - ex: 
+é seg e jogou seg então pode reseva para qua apenas
+é ter e jogou seg pode reservar para qua ou qui mas não para a ter
+ou seja, 
+) se tem reserva futura só cancelando para fazer outra mesmo que após 13h
+5) se cancelar reserva faltando menos do que x minutos bloquear reserva por n dias(penalidade)!!!!!!!
+6) verificar se ambos tenistas do amistoso cumpre as regras
+7) tenista bloqueado não pode amistoso
+8) ao tentar agendar um desafio verificar se os tenistas tem amistoso agendado um dia antes ou um dia depois e se tiver não aceita agendar desafio e indica que tem que cancelar o amistoso 
+9) ao tentar agendar um amistosos verificar se os tenitsa tem desafio na véspera ou no dia seguinte a agenda pretendida e então informa que em função do desafio não consegue agendar amistoso
+10) basicamente se tiver um jogo (desafio ou amistoso) no dia anterior ou no dia seguinte a agenda pretendida, informar que não rola esta nova agenda enquanto a outra continuar ativa
+12) amistoso só pode ser cancelado até x horas antes, senão será dado como jogado, e irá bloquear agenda para novo amistoso como jogo jogado mesmo
+13) não terá função informar resultado num primeiro momento
+14) se tem agenda, apresentar só botão cancelar e validar se cancelamento bloqueia ou não agenda, se gera multa ...
+15) se não tem agenda, apresentar botão agendamento
+16) apresentar em MINHA AGENDA apenas agendas futuras, não jogadas
+17) agendas possíveis deve listar na terça os jogos de quinta já que quarta não tem agenda de amistoso por causa do ranking?
+
+- como pegar a data/hora do servidor para evitar que manipulem alterando a datahora do celular
+
+- resultados listar head to head
+- gravar agenda como pré reserva 
+- se link não for confirmado em x tempo caduca e é deletado
+
+- cancelar desafio: informar tenista desistente para W.O., se até 2h antes não gera multa 
+
+- reagendamento: modificar agenda desafio, uma modificação pode, se até 2h antes, após só cancelamento
+
+- agendamento de amistosos
+
+enquanto tem jogo sem resultado lançado não pode desafiar, independente de data
+
+historico (email informando )
+
+meu perfil apresentar jogos jogados e sets jogados (performance)
+
+implementar segunda recusa W.O.
+
+bloquear quadras
+
+quando cancela um jogo agendado e perde por WO tem que esperar algum prazo para desafiar novamente?
+se quem cancelou foi o desafiante, então pode desafiar?
+se quem cancelou foi o defensor, então ele perdeu a posição e ai tem que esperar para ter revanche?
+ou quando é por WO não tem que esperar prazo para revanche?
+
+informar resultado 
+-envia email com resutaldo informado)
+
+meu histórico (ordenar por data mais atual)
+- resultado desafios
+- resultado amistosos
+
+agendar amistoso (após 13h liberado)
